@@ -1,26 +1,24 @@
 version: "3.9"
 
 services:
-ina-be-sim:
-container_name: akr-be
-build:
-context: .
-dockerfile: Dockerfile
-image: inaai-backend-sim:latest
-restart: always
-ports:
-- "4002:8000"
-command: poetry run start-server
-depends_on:
-- migration
+  ina-be-sim:
+    container_name: akr-be
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: inaai-backend-sim:latest
+    restart: always
+    ports:
+      - "4002:8000"
+    command: poetry run start-server
+    depends_on:
+      - migration
 
-migration:
-image: inaai-backend-sim:latest
-build:
-context: .
-dockerfile: Dockerfile
-container_name: ina-be-sim-migration
-command: poetry run db-migrate
-restart: "no"
-networks:
-- default
+  migration:
+    container_name: ina-be-sim-migration
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: inaai-backend-sim:latest
+    command: poetry run db-migrate
+    restart: "no"
